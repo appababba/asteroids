@@ -25,6 +25,7 @@ def main():
     Player.containers = (updatable, drawable)
 
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+    lives = 3
 
     dt = 0
 
@@ -38,8 +39,13 @@ def main():
 
         for asteroid in asteroids:
             if asteroid.collides_with(player):
-                print("Game over!")
-                sys.exit()
+                lives -= 1
+                if lives > 0:
+                    print(f"Hit! Lives remaining: {lives}")
+                    player.reset_position(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+                else:
+                    print("Game over!")
+                    sys.exit()
 
             for shot in shots:
                 if asteroid.collides_with(shot):
